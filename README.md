@@ -1,4 +1,4 @@
-# Rive Pokedex
+# [Work In Progress] Rive Pokedex
 
 A pokedex built using Rive and Tanstack Start using TypeScript and React.
 

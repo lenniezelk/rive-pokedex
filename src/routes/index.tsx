@@ -5,6 +5,8 @@ import { fetchPokemon } from '../lib/pokemonApi'
 import { Pokemon, PokemonQueryVariables } from '../types'
 import { queryClient } from '../lib/query-client'
 import { useState } from 'react'
+import Rive, { Alignment, Fit, Layout, useRive } from '@rive-app/react-canvas';
+import riveFile from '../assets/pokedex.riv';
 
 const INITIAL_OFFSET = 0;
 const INITIAL_LIMIT = 30;
@@ -35,9 +37,19 @@ export const Route = createFileRoute('/')({
 })
 
 function Home() {
-  const variables: PokemonQueryVariables = { limit: INITIAL_LIMIT, offset: INITIAL_OFFSET  };
+  const variables: PokemonQueryVariables = { limit: INITIAL_LIMIT, offset: INITIAL_OFFSET };
   const [showDefaultOnly, setSetshowDefaultOnly] = useState(true);
   let pokemons: Pokemon[] = [];
+
+  const { rive, RiveComponent } = useRive({
+    src: riveFile,
+    stateMachines: "State Machine 1",
+    autoplay: true,
+    layout: new Layout({
+      fit: Fit.Contain,
+      alignment: Alignment.Center
+    })
+  });
 
   // This `useQuery` call is now "hydration-aware"
   // On initial load, it gets data from the server's dehydrated cache.
@@ -66,6 +78,9 @@ function Home() {
   }
 
   return (
-    <div>{JSON.stringify(pokemons)}</div>
+    <div className="w-screen h-screen">
+      <RiveComponent
+      />
+    </div>
   )
 }
